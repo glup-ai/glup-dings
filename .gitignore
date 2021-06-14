@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/macos,jupyternotebooks,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,jupyternotebooks,python
+=======
+# Created by https://www.toptal.com/developers/gitignore/api/python,macos,jupyternotebooks,linux
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,macos,jupyternotebooks,linux
+>>>>>>> d206a76c1d9a27a11222aa666861d0cff7cafaf0
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
@@ -16,6 +21,24 @@ ipython_config.py
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
 
+<<<<<<< HEAD
+=======
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+>>>>>>> d206a76c1d9a27a11222aa666861d0cff7cafaf0
 ### macOS ###
 # General
 .DS_Store
@@ -191,4 +214,12 @@ Thumbs.db
 .prof
 
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/macos,jupyternotebooks,python
+=======
+# End of https://www.toptal.com/developers/gitignore/api/python,macos,jupyternotebooks,linux
+
+# user defined:
+*.jpg
+*.jpeg
+>>>>>>> d206a76c1d9a27a11222aa666861d0cff7cafaf0
