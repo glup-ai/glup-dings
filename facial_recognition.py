@@ -2,17 +2,27 @@ import numpy as np
 import cv2
 import time
 
-def process_image(image, detector, ratio=0.752, min_confidence=0.9, debug=False):
+def process_image(
+    image: np.ndarray,
+    detector,
+    ratio: float = 0.752,
+    min_confidence: float = 0.9,
+    debug: bool = False
+    ) -> tuple:
     """
     Process a single image.
     Parameters
     ----------
-    image : 3d numpy array
+    image:
         Input image in BGR-space.
-    output_directory : string
-        Path to the directory where the processed images will be saved.
-    detector : ?
+
+    detector:
         Passed as argument to avoid overhead.
+    
+    ratio:
+    min_confidence:
+    debug:
+        Toggle debug print on / off.
     """
      
     timing = time.time()
@@ -48,7 +58,6 @@ def process_image(image, detector, ratio=0.752, min_confidence=0.9, debug=False)
         if debug:
             print(f"{result['confidence']}")
         
-  
         keypoints = result['keypoints']
         (x, y, width, height) = result['box']
         width_delta = int(((height * ratio) - width)/2)
