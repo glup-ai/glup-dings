@@ -43,7 +43,7 @@ def process_image(
         print(f"image size: {image.size*image.itemsize*1e-6:.1f} MB")
 
     if not results:
-        if(debug):
+        if debug:
             print(f"No faces detected in image. Skipping.")
 
     for face_idx, result in enumerate(results):
