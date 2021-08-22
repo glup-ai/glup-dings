@@ -83,12 +83,12 @@ while rval:
         for person in persons:
             
             distances = np.linalg.norm(features-person, axis=1)
-            print(distances.shape)
-            print(distances)
+            #print(distances.shape)
+            #print(distances)
                 
             averages.append(np.average(distances))
 
-        print(averages)
+        #print(averages)
         index = np.argmin(averages)
 
         label = labels[index]
