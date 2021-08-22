@@ -7,6 +7,20 @@ from facial_recognition import process_image
 
 class FacePosition:
     def __init__(self, x: int, y: int, last_seen=None, size=None):
+        """
+        x:
+            x coordinate of the top left corner of the face.
+        y:
+            y coordinate of the top left corner of the face.
+
+        last_seen:
+            The time (in seconds) this face was last seen.
+
+        size: [0, 1]
+            The size of the face in fractions of the total image area.
+            This corresponds to how far away the face is from the
+            camera.
+        """
         self.x = x
         self.y = y
         self.r = np.sqrt(x**2 + y**2)
