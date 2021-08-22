@@ -38,6 +38,7 @@ detector = MTCNN()
 
 model = keras.models.load_model('trained_model')
 
+print(model.summary())
 cv2.namedWindow("preview")
 vc = cv2.VideoCapture(0)
 

@@ -1,3 +1,5 @@
+
+# %%
 import os
 from os import walk
 import glob
@@ -19,7 +21,9 @@ import time
 images = []
 labels = []
 
+
 # Load dataset
+# %%
 
 
 for dir in os.listdir('dataset'):
@@ -35,6 +39,7 @@ for dir in os.listdir('dataset'):
 
 images = np.array(images)
 labels = np.array(labels)
+# %%
 
 persons= []
 
@@ -43,12 +48,20 @@ detector = MTCNN()
 
 model = keras.models.load_model('splitted_twin_3')
 
-
 for i in range(len(images)):
     features = model.predict(np.array(images[i]))
     persons.append(features)
 
 persons = np.array(persons)
+# %%
+
+def euclidean_distance(vectors):
+    # unpack the vectors into separate lists
+    (featsA, featsB) = vectors
+    # compute the sum of squared distances between the vectors
+    sumSquared = np.sum(np.square(featsA - featsB))
+    # return the euclidean distance between the vectors
+    return np.sqrt(np.max(sumSquared, 0))
 
 
 cv2.namedWindow("preview")
@@ -59,9 +72,8 @@ if vc.isOpened():
 else:
     rval = False
 
-i = 20
+floating_index = []
 while rval:
-    i += 1
     rval, frame = vc.read()
     
     image_total, faces = process_image(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), detector, debug=False)
@@ -77,21 +89,18 @@ while rval:
         
 
         features = np.array(model.predict(np.array([resized]))[0])
+        min_values = []
 
-        averages = []
-
-        for person in persons:
-            
+        for i, person in enumerate(persons):
             distances = np.linalg.norm(features-person, axis=1)
-            #print(distances.shape)
-            #print(distances)
-                
-            averages.append(np.average(distances))
+            min_values.append(np.min(distances))
+            print(labels[i], ": ", np.argmin(distances), np.min(distances))
+        index = np.argmin(min_values)
+        floating_index.append(index)
 
-        #print(averages)
-        index = np.argmin(averages)
-
-        label = labels[index]
+        label_index = np.argmax(np.bincount(floating_index))
+        label = labels[label_index]
+        print("Winner: ", label)
 
         cv2.putText(image_total,f"{label}", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
@@ -103,3 +112,11 @@ while rval:
         break
 cv2.destroyAllWindows()
 vc.release()
+
+# %%
+
+# %%
+
+# %%
+
+# %%
