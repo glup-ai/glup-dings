@@ -1,11 +1,13 @@
 import sys, time
 import numpy as np
-from flask import Flask, render_template, Response
 from mtcnn import MTCNN
 import cv2
 from facial_recognition import process_image
 
 class FacePosition:
+    """
+    TODO: Implement __sub__ for taking the difference between faces.
+    """
     def __init__(self, x: int, y: int, last_seen=None, size=None):
         """
         x:
@@ -19,7 +21,7 @@ class FacePosition:
         size: [0, 1]
             The size of the face in fractions of the total image area.
             This corresponds to how far away the face is from the
-            camera.
+            camera. TODO: Implement check that size in [0, 1].
         """
         self.x = x
         self.y = y
