@@ -15,6 +15,7 @@ from tensorflow import keras
 
 import cv2
 from facial_recognition import process_image
+from face_tracker import Face, FaceTracker
 
 import time
 
@@ -64,15 +65,20 @@ def euclidean_distance(vectors):
     return np.sqrt(np.max(sumSquared, 0))
 
 
+
+
 cv2.namedWindow("preview")
 vc = cv2.VideoCapture(0)
+
+ft = FaceTracker()
 
 if vc.isOpened():
     rval, frame = vc.read()
 else:
     rval = False
 
-floating_index = []
+
+
 while rval:
     rval, frame = vc.read()
     
@@ -86,23 +92,26 @@ while rval:
 
         #cv2.imwrite(f'dataset/{int(time.time())}.png', cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
         (x, y, width, height) = loc
-        
 
+        face = ft.feed(Face(x,y,width,height))
+        
         features = np.array(model.predict(np.array([resized]))[0])
         min_values = []
 
         for i, person in enumerate(persons):
             distances = np.linalg.norm(features-person, axis=1)
             min_values.append(np.min(distances))
-            print(labels[i], ": ", np.argmin(distances), np.min(distances))
+            
         index = np.argmin(min_values)
-        floating_index.append(index)
+        value = np.min(min_values)
+        
+        if(value<50):
+            face.votes.append(index)
 
-        label_index = np.argmax(np.bincount(floating_index))
-        label = labels[label_index]
-        print("Winner: ", label)
-
-        cv2.putText(image_total,f"{label}", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+        if(len(face.votes)>0):
+            final_index = np.argmax(np.bincount(face.votes))
+            label = labels[final_index]
+            cv2.putText(image_total,f"{label}", (x,y), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
 
     cv2.imshow("preview", cv2.cvtColor(image_total, cv2.COLOR_RGB2BGR))
